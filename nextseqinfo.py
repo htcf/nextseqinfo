@@ -208,7 +208,7 @@ def parse_tilemetrics(path):
     num_cluster_pf  = { }
 
     # header_size bits of header, 8 bits to a byte 
-    for i in range(0,((a.len - header_size) / (record_byte_length * 8))):
+    for i in range(0,int((a.len - header_size) / (record_byte_length * 8))):
  
         lane_number  = a.read('uintle:16')
 
