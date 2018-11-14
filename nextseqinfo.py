@@ -226,33 +226,33 @@ def parse_tilemetrics(path):
 
             # only grab desired metrics
             if (metric_code == 100):
-                if (not cluster_density.has_key(lane_number)):
+                if lane_number not in cluster_density:
                     cluster_density[lane_number] = [ ]
                 cluster_density[lane_number].append(metric_value)
             elif (metric_code == 102):
-                if (not num_cluster.has_key(lane_number)):
+                if lane_number not in num_cluster:
                     num_cluster[lane_number] = 0
                 num_cluster[lane_number]+= metric_value
             elif (metric_code == 103):
-                if (not num_cluster_pf.has_key(lane_number)):
+                if lane_number not in num_cluster_pf:
                     num_cluster_pf[lane_number] = 0
                 num_cluster_pf[lane_number] += int(metric_value)
             elif (metric_code == 300):
-                if (not percent_aligned.has_key(lane_number)):
+                if lane_number not in percent_aligned:
                     percent_aligned[lane_number] = { } 
-                if (not percent_aligned[lane_number].has_key(1)):
+                if 1 not in percent_aligned[lane_number]:
                     percent_aligned[lane_number][1] = [ ]
                 percent_aligned[lane_number][1].append(metric_value)
             elif (metric_code == 301):
-                if (not percent_aligned.has_key(lane_number)):
+                if lane_number not in percent_aligned:
                     percent_aligned[lane_number] = { } 
-                if (not percent_aligned[lane_number].has_key(2)):
+                if 2 not in percent_aligned[lane_number]:
                     percent_aligned[lane_number][2] = [ ]
                 percent_aligned[lane_number][2].append(metric_value)
             elif (metric_code == 302):
-                if (not percent_aligned.has_key(lane_number)):
+                if lane_number not in percent_aligned:
                     percent_aligned[lane_number] = { } 
-                if (not percent_aligned[lane_number].has_key(3)):
+                if 3 not in percent_aligned[lane_number]:
                     percent_aligned[lane_number][3] = [ ]
                 percent_aligned[lane_number][3].append(metric_value)
         else:
@@ -266,16 +266,16 @@ def parse_tilemetrics(path):
                 
                 calc_cluster_density = cluster_count / tile_area
 
-                if (not cluster_density.has_key(lane_number)):
+                if lane_number not in cluster_density:
                     cluster_density[lane_number] = [ ]
 
                 cluster_density[lane_number].append(calc_cluster_density)
 
-                if (not num_cluster.has_key(lane_number)):
+                if lane_number not in num_cluster:
                     num_cluster[lane_number] = 0
                 num_cluster[lane_number]+= cluster_count 
 
-                if (not num_cluster_pf.has_key(lane_number)):
+                if lane_number not in num_cluster_pf:
                     num_cluster_pf[lane_number] = 0
                 num_cluster_pf[lane_number] += int(pf_cluster_count) 
 
@@ -285,9 +285,9 @@ def parse_tilemetrics(path):
                 pct_aligned = a.read('floatle:32')
                 
                 if (not math.isnan(pct_aligned)):
-                    if (not percent_aligned.has_key(lane_number)):
+                    if lane_number not in percent_aligned:
                         percent_aligned[lane_number] = { }
-                    if (not percent_aligned[lane_number].has_key(read_number)):
+                    if read_number not in percent_aligned[lane_number]:
                         percent_aligned[lane_number][read_number] = [ ]
                     percent_aligned[lane_number][read_number].append(pct_aligned)
 
@@ -326,9 +326,9 @@ def parse_tilemetrics(path):
 
             narray = numpy.array(percent_aligned[lane][read])
             
-            if (not dict['percent_aligned'].has_key(lane)):
+            if lane not in dict['percent_aligned']:
                 dict['percent_aligned'][lane] = { }
-            if (not dict['percent_aligned'][lane].has_key(read)):
+            if read not in dict['percent_aligned'][lane]:
                 dict['percent_aligned'][lane][read] = { }
             dict['percent_aligned'][lane][read] = round(numpy.mean(narray), 2)
     
@@ -418,10 +418,10 @@ def parse_qualitymetrics(path, read_cycle_lookup):
 
            count = a.read('uintle:32')
 
-           if (not total_clusters.has_key(lane_number)):
+           if lane_number not in total_clusters:
                total_clusters[lane_number] = { }
            
-           if (not total_clusters[lane_number].has_key(read_number)):
+           if read_number not in total_clusters[lane_number]:
                total_clusters[lane_number][read_number] = 0
 
            total_clusters[lane_number][read_number] += count
@@ -435,10 +435,10 @@ def parse_qualitymetrics(path, read_cycle_lookup):
 
            if (bucket_qscore >= 30):
 
-               if (not q30_clusters.has_key(lane_number)):
+               if lane_number not in q30_clusters:
                    q30_clusters[lane_number] = { }
  
-               if (not q30_clusters[lane_number].has_key(read_number)):
+               if read_number not in q30_clusters[lane_number]:
                    q30_clusters[lane_number][read_number] = 0
 
                q30_clusters[lane_number][read_number] += count   
@@ -504,10 +504,10 @@ def parse_errormetrics(path, read_cycle_lookup):
     
         read_number = read_cycle_lookup[cycle_number - 1]
         
-        if (not error_rates.has_key(lane_number)):
+        if lane_number not in error_rates:
             error_rates[lane_number] = { } 
         
-        if (not error_rates[lane_number].has_key(read_number)):
+        if read_number not in error_rates[lane_number]:
             error_rates[lane_number][read_number] = [ ]
 
         error_rates[lane_number][read_number].append(error_rate)            
@@ -600,10 +600,10 @@ def parse_correctedintensitymetrics(path):
 
             snr = a.read('floatle:32')
 
-        if (not num_called.has_key(lane_number)):
+        if lane_number not in num_called:
             num_called[lane_number] = { }
 
-        if (not num_called[lane_number].has_key(cycle_number)):
+        if cycle_number not in num_called[lane_number]:
             num_called[lane_number][cycle_number] = { }
             num_called[lane_number][cycle_number]['N'] = 0 
             num_called[lane_number][cycle_number]['A'] = 0 
@@ -621,12 +621,12 @@ def parse_correctedintensitymetrics(path):
      
     for l in num_called:
  
-        if (not pct_called.has_key(l)):
+        if l not in pct_called:
             pct_called[l] = { }
 
         for c in num_called[l]:
 
-            if (not pct_called[l].has_key(c)):
+            if c not in pct_called[l]:
                 pct_called[l][c] = {}
 
             total_calls = num_called[l][c]['N'] + num_called[l][c]['A'] + num_called[l][c]['C'] + num_called[l][c]['G'] + num_called[l][c]['T']
@@ -742,9 +742,9 @@ for ln in runinfo['lanes']:
             rd['error_rate_stddev'] = 0
             rd['percent_aligned']   = 0
         else:
-            if (interop.has_key('error_rate')):
-                if (interop['error_rate'].has_key(int(lane_number))):
-                    if (interop['error_rate'][int(lane_number)].has_key(read_number)): 
+            if 'error_rate' in interop:
+                if int(lane_number) in interop['error_rate']:
+                    if read_number in interop['error_rate'][int(lane_number)]:
                         rd['error_rate'] = interop['error_rate'][int(lane_number)][read_number]
                     else:
                         rd['error_rate'] = 0
@@ -753,9 +753,9 @@ for ln in runinfo['lanes']:
             else:
                 rd['error_rate'] = 0
  
-            if (interop.has_key('error_rate_stddev')):
-                if (interop['error_rate_stddev'].has_key((int(lane_number)))):
-                    if (interop['error_rate_stddev'][int(lane_number)].has_key(read_number)):
+            if 'error_rate_stddev' in interop:
+                if int(lane_number) in interop['error_rate_stddev']:
+                    if read_number in interop['error_rate_stddev'][int(lane_number)]:
                         rd['error_rate_stddev'] = interop['error_rate_stddev'][int(lane_number)][read_number]
                     else:
                         rd['error_rate_stddev'] = 0    
@@ -764,8 +764,8 @@ for ln in runinfo['lanes']:
             else:
                 rd['error_rate_stddev'] = 0
 
-            if (interop['percent_aligned'].has_key((int(lane_number)))):
-                if (interop['percent_aligned'][int(lane_number)].has_key(read_number)):
+            if int(lane_number) in interop['percent_aligned']:
+                if read_number in interop['percent_aligned'][int(lane_number)]:
                     rd['percent_aligned'] = interop['percent_aligned'][int(lane_number)][read_number]
                 else:
                     rd['percent_aligned'] = 0
