@@ -694,7 +694,7 @@ run_folder_full_path = args.run_folder
 if (not valid_runfolder(run_folder_full_path)):
     sys.exit('invalid run folder %s' % (run_folder_full_path))
 
-os.umask(0007)
+os.umask(0o007)
 
 runinfo    = lookup_runinfo(run_folder_full_path)
 run_number = runinfo['run_number']
@@ -774,7 +774,7 @@ for ln in runinfo['lanes']:
 
 del runinfo['index_reads'] 
 
-print runinfo
+print(runinfo)
 
 #transmit_stats(runinfo)
 #transmit_plots(runinfo['run_id'], plot_files)
